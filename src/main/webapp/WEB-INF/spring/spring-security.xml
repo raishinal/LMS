@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+">
+
+  <security:http auto-config="true" use-expressions="true">
+      
+  <security:intercept-url pattern="/User/**" access="hasRole('ROLE_USER')"/>
+  <security:intercept-url pattern="/Retailer/**" access="hasRole('ROLE_RETAILER')"/>
+  <security:intercept-url pattern="/Admin/**" access="hasRole('ROLE_ADMIN')"/>
+    <security:form-login username-parameter="username"
+                            password-parameter="password"
+                            default-target-url="/Admin/Home"
+                            authentication-success-handler-ref="customSuccessHandler"
+                            login-page="/Login"
+                            login-processing-url="/Login"
+                     
+                             />
+
+    </security:http>
+    
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:jdbc-user-service
+                        data-source-ref="dataSource"
+                        users-by-username-query="select username, password, active 
+                                from User_Details where username=?"
+                        authorities-by-username-query="select ul.username, ur.authority
+                                 from User_Details as ul, User_Role as ur             
+                                where ul.usr_dtl_id=ur.usr_dtl_id and username=?"/>
+            
+        <security:password-encoder ref="bcryptEncoder"/>
+        </security:authentication-provider>
+      </security:authentication-manager>
+ 
+<bean id="bcryptEncoder" 
+      class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+<!--<bean id="customSuccessHandler" 
+            class="com.itn.config.CustomSuccessHandler" />-->
+
+<bean id="customSuccessHandler"
+class="com.lms.config.AuthSuccessHandler"/>
+
+
+</beans>

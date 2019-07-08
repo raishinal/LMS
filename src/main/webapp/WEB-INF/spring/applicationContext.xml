@@ -41,6 +41,7 @@
     <bean id="Items" class="com.lms.models.Items"></bean>
     <bean id="Cart" class="com.lms.models.Cart"></bean>
     <bean id="Alerts" class="com.lms.models.Alerts"></bean>
+    <bean id="LikeCounts" class="com.lms.models.LikeCounts"></bean>
     <bean id="SessionCount" class="com.lms.models.SessionCount"></bean>
     <bean id="user_details" class="com.lms.models.UserDetails"></bean>
     <bean id="user_login" class="com.lms.models.UserRole"></bean>

@@ -27,8 +27,10 @@ public interface ItemService {
     public List<Items> findItemBySub(int sub);
     public List<Items> findItemByKey(String key);
     public List<Items> findLatestItems();
+    public List<Items> findPopularItems();
     public List<Items> findLatestByDate(String date);
     public List<Items> findByRetailer(int id);
+    public List<Items> filterByPrice(int sub,double id);
 
     public boolean updateItem(Items item);
 

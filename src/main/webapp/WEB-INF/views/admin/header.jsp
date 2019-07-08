@@ -49,6 +49,7 @@
 			<li class="active"><a href="<c:url value="/Admin/ManageUser"/>"><svg class="glyph stroked user"><use xlink:href="#stroked-user"></use></svg> Manage User</a></li>
 			<li class="active"><a href="<c:url value="/Admin/ManageOrder"/>"><svg class="glyph stroked user"><use xlink:href="#stroked-user"></use></svg> Manage Order</a></li>
 			<li class="active"><a href="<c:url value="/Admin/Alert/Show"/>"><svg class="glyph stroked user"><use xlink:href="#stroked-user"></use></svg> Alert Center</a></li>
+			<li class="active"><a href="<c:url value="/Admin/Mail"/>"><svg class="glyph stroked user"><use xlink:href="#stroked-user"></use></svg> Send Mail</a></li>
 			
 		</ul>
 

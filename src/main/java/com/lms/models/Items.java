@@ -36,11 +36,12 @@ public class Items implements Serializable{
     private String imageName;
     private String posted_date;
     private int retailer;
+    private int likecounts;
 
     public Items() {
     }
 
-    public Items(String name, int category, String tags, String description, double price, int stock, MultipartFile image, String imageName, String posted_date, int retailer) {
+    public Items(String name, int category, String tags, String description, double price, int stock, MultipartFile image, String imageName, String posted_date, int retailer, int likecounts) {
         this.name = name;
         this.category = category;
         this.tags = tags;
@@ -51,9 +52,10 @@ public class Items implements Serializable{
         this.imageName = imageName;
         this.posted_date = posted_date;
         this.retailer = retailer;
+        this.likecounts = likecounts;
     }
 
-    public Items(int id, String name, int category, String tags, String description, double price, int stock, MultipartFile image, String imageName, String posted_date, int retailer) {
+    public Items(int id, String name, int category, String tags, String description, double price, int stock, MultipartFile image, String imageName, String posted_date, int retailer, int likecounts) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -65,6 +67,7 @@ public class Items implements Serializable{
         this.imageName = imageName;
         this.posted_date = posted_date;
         this.retailer = retailer;
+        this.likecounts = likecounts;
     }
 
     public int getId() {
@@ -154,6 +157,16 @@ public class Items implements Serializable{
     public void setRetailer(int retailer) {
         this.retailer = retailer;
     }
+
+    public int getLikecounts() {
+        return likecounts;
+    }
+
+    public void setLikecounts(int likecounts) {
+        this.likecounts = likecounts;
+    }
+
+   
 
 
 }

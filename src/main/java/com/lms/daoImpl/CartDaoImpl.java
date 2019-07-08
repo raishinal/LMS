@@ -95,4 +95,16 @@ public class CartDaoImpl implements CartDao {
         return mcl;
     }
 
+    @Override
+    public List<Cart> selectByRetailer(int id) {
+         Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from Cart where retailer = :code ");
+        query.setParameter("code", id);
+        List mcl = query.list();
+        session.getTransaction().commit();
+        session.close();
+        return mcl;
+    }
+
 }

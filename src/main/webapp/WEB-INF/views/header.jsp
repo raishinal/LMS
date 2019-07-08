@@ -54,7 +54,7 @@
                                         <c:if test="${user_type==2}">
                                         <li class="btn-cta"><a href="<c:url value="/Retailer/Profile"/>">Profile</a></li>
                                         </c:if>
-                                        <c:if test="${user_type==0}">
+                                        <c:if test="${user_type==3}">
                                         <li class="btn-cta"><a href="<c:url value="/Admin/Home"/>">DashBoard</a></li>
                                         </c:if>
                                         

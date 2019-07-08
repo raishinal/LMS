@@ -24,31 +24,34 @@ public class Cart {
     private int quantity;
     private double price;
     private String productname;
+    private int retailer;
     private String orderdate;
     private String productimage;
 
-    public Cart() {
-    }
-
-    public Cart(String username, int productid, int quantity, double price, String productname, String orderdate, String productimage) {
-        this.username = username;
-        this.productid = productid;
-        this.quantity = quantity;
-        this.price = price;
-        this.productname = productname;
-        this.orderdate = orderdate;
-        this.productimage = productimage;
-    }
-
-    public Cart(int id, String username, int productid, int quantity, double price, String productname, String orderdate, String productimage) {
+    public Cart(int id, String username, int productid, int quantity, double price, String productname, int retailer, String orderdate, String productimage) {
         this.id = id;
         this.username = username;
         this.productid = productid;
         this.quantity = quantity;
         this.price = price;
         this.productname = productname;
+        this.retailer = retailer;
         this.orderdate = orderdate;
         this.productimage = productimage;
+    }
+
+    public Cart(String username, int productid, int quantity, double price, String productname, int retailer, String orderdate, String productimage) {
+        this.username = username;
+        this.productid = productid;
+        this.quantity = quantity;
+        this.price = price;
+        this.productname = productname;
+        this.retailer = retailer;
+        this.orderdate = orderdate;
+        this.productimage = productimage;
+    }
+
+    public Cart() {
     }
 
     public int getId() {
@@ -99,6 +102,14 @@ public class Cart {
         this.productname = productname;
     }
 
+    public int getRetailer() {
+        return retailer;
+    }
+
+    public void setRetailer(int retailer) {
+        this.retailer = retailer;
+    }
+
     public String getOrderdate() {
         return orderdate;
     }
@@ -114,5 +125,7 @@ public class Cart {
     public void setProductimage(String productimage) {
         this.productimage = productimage;
     }
+
+   
 
 }

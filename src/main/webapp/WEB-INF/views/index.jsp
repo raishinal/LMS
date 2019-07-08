@@ -86,6 +86,34 @@
 				</div>
 			</div>
 		</div>
+		<div class="colorlib-blog">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
+						<h2>Popular Items</h2>
+						<p>popular Items By likes</p>
+					</div>
+				</div>
+				<div class="row">
+                                    <c:forEach items="${popularitems}" var="item">
+					<div class="col-md-4 animate-box">
+						<article class="article-entry">
+							<div class="admin">
+								<p><span><i class="icon-user2"></i>${item.tags}</span> <span><a href="#"><i class="icon-bubble3"></i> ${item.stock}</a></span></p>
+							</div>
+							<div class="desc2">
+								<h2><a href="<c:url value="/Item/${item.id}"/>">${item.name}</a></h2>
+							</div>
+							<a href="<c:url value="/Item/${item.id}"/>" class="blog-img" style="background-image: url(<c:url value="/resources/itemimage/${item.imageName}"/>);"></a>
+							<div class="desc">
+								<p>Price: Rs ${item.price}</p>
+							</div>
+						</article>
+					</div>
+                                    </c:forEach>
+				</div>
+			</div>
+		</div>
 
                 <jsp:include page="footer.jsp"/>
 	</div>

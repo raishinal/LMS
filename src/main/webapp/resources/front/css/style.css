@@ -870,6 +870,23 @@ h1, h2, h3, h4, h5, h6, figure {
     .contact-info-wrap-flex p a {
       color: #000; }
 
+
+.like-button {
+  display: inline-block;
+    height: 33px;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 5px;
+    vertical-align: top;
+    width: 32px;
+
+}
+.like-button img{
+  display: block;
+  height: 30px;  
+  width: 30px;
+}
+
 .form-control {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -1620,4 +1637,4 @@ input[type="text"] {
               .sidebar-filter .common-filter .filter-list {
                 position: relative;
                 padding-left: 28px; }
-          
+

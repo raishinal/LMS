@@ -55,6 +55,7 @@
                                         <th data-field="quantity"  data-sortable="true">Quantity</th>
                                         <th data-field="price" data-sortable="true">Price</th>
                                         <th data-field="date" data-sortable="true">Order Date</th>
+                                        <th>Delivered</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,6 +66,8 @@
                                             <td>${od.quantity}</td>
                                             <td>${od.price}</td>
                                             <td>${od.orderdate}</td>
+                                            <td><a href="<c:url value="/Retailer/Order/Delivered/${od.id}"/>" onclick="return confirm('Are you sure?')">Delivered</a></td>
+                                       
                                         </tr>
                                     </c:forEach>
                                 </tbody>

@@ -78,6 +78,7 @@ public class ItemController {
         item.setTags(tags);
         item.setPrice(price);
         item.setRetailer(0);
+        item.setLikecounts(0);
         item.setPosted_date(formattedDateTime);
 
         if (!itemService.addItem(item)) {
@@ -140,6 +141,7 @@ public class ItemController {
         item.setDescription(description);
         item.setPrice(price);
         item.setRetailer(0);
+        item.setLikecounts(i.getLikecounts());
         item.setPosted_date(i.getPosted_date());
 
         if (!itemService.updateItem(item)) {

@@ -21,8 +21,10 @@ public interface ItemDao {
     public List<Items> selectBySub(int sub);
     public List<Items> searchKeywords(String key);
     public List<Items> findLatestItem();
+    public List<Items> findPopularItem();
     public List<Items> findByDate(String date);
     public List<Items> findByRetailer(int id);
+    public List<Items> findByPrice(int sub,double price);
     public boolean update(Items item);
     public boolean delete(int id);
 }

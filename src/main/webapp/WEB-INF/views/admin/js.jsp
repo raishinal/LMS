@@ -19,6 +19,7 @@
         <script src="<c:url value="/resources/admin/js/easypiechart-data.js"/>"></script>
         <script src="<c:url value="/resources/admin/js/bootstrap-datepicker.js"/>"></script>
         <script src="<c:url value="/resources/admin/js/bootstrap-table.js"/>"></script>
+        <script src="<c:url value="/resources/admin/js/canvasjs.min.js"/>"></script>
         <script>
             $('#calendar').datepicker({
             });

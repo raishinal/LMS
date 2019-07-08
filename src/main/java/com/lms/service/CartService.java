@@ -19,6 +19,7 @@ public interface CartService {
         
     public List<Cart> findCartById(int id);
     public List<Cart> findCartByUsername(String user);
+    public List<Cart> findCartByRetailer(int id);
     public List<Cart> findCartByDate(String date);
     
      public boolean deleteCart(int id);

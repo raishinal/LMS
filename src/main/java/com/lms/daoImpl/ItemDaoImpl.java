@@ -169,4 +169,29 @@ public class ItemDaoImpl implements ItemDao {
         session.close();
         return mcl;
     }
+
+    @Override
+    public List<Items> findByPrice(int sub, double price) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from Items where category="+sub+" AND price <= "+price);
+        List<Items> mcl = query.list();
+        session.getTransaction().commit();
+        session.close();
+        return mcl;
+    }
+
+    @Override
+    public List<Items> findPopularItem() {
+         Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from Items ORDER BY likecounts DESC ");
+        query.setFirstResult(0);
+        query.setMaxResults(3);
+        List<Items> mcl = query.list();
+        
+        session.getTransaction().commit();
+        session.close();
+        return mcl;
+    }
 }

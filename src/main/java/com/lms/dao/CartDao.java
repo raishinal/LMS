@@ -21,6 +21,7 @@ public interface CartDao {
     public List<Cart> selectById(int id);
 
     public List<Cart> selectByUsername(String user);
+    public List<Cart> selectByRetailer(int id);
     public List<Cart> selectByDate(String date);
 
     public boolean delete(int id);

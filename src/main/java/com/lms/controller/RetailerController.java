@@ -234,6 +234,7 @@ public class RetailerController {
         item.setTags(tags);
         item.setPrice(price);
         item.setRetailer(userService.findUserByUsername(p.getName()).getId());
+        item.setLikecounts(0);
         item.setPosted_date(formattedDateTime);
 
         if (!itemService.addItem(item)) {
@@ -292,6 +293,7 @@ public class RetailerController {
         item.setDescription(description);
         item.setPrice(price);
         item.setRetailer(i.getRetailer());
+        item.setLikecounts(i.getLikecounts());
         item.setPosted_date(i.getPosted_date());
 
         if (!itemService.updateItem(item)) {
@@ -312,5 +314,33 @@ public class RetailerController {
             return "redirect:/Retailer/Items/Show?Failed";
         }
     }
+    
+    
+     @GetMapping("/Retailer/Order/Show")
+    public ModelAndView showOrder(ModelAndView mv, Principal p) {
+        mv.addObject("username", p.getName());
+        mv.addObject("user_type",2);
+        mv.addObject("userdetail", userService.findUserByUsername(p.getName()));
+        mv.addObject("status", 1);
+        mv.addObject("sublist", categoryService.findSubCategory());
+        int id=userService.findUserByUsername(p.getName()).getId();
+        mv.addObject("order",cartService.findCartByRetailer(id));
+
+        mv.setViewName("/user/retailerorder");
+
+        return mv;
+    }
+    
+       @RequestMapping(value = "/Retailer/Order/Delivered/{id}", method = RequestMethod.GET)
+    public String deleteOrder(@PathVariable int id) {
+        if (cartService.deleteCart(id)) {
+            return "redirect:/Retailer/Order/Show?Success";
+
+        } else {
+            return "redirect:/Retailer/Order/Show?Failed";
+        }
+    }
+
+
 
 }

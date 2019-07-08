@@ -37,23 +37,7 @@
                             <h2 class="contact-head">Your Information</h2>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="contact-info-wrap-flex">
-                                        
-                                            <div class="con-info">
-                                                <p><span><i class="icon-location-2"></i></span> <a href="<c:url value="/Retailer/Profile"/>">Your personal Detail</a></p>
-                                            </div>
-                                            <div class="con-info">
-                                                <p><span><i class="icon-phone3"></i></span> <a href="<c:url value="/Retailer/ChangePassword"/>">Change Password</a></p>
-                                            </div>
-                                            <div class="con-info">
-                                                <p><span><i class="icon-paperplane"></i></span> <a href="<c:url value="/Retailer/Items/Add"/>">Add Items</a></p>
-                                            </div>
-
-                                            <div class="con-info">
-                                                <p><span><i class="icon-paperplane"></i></span> <a href="<c:url value="/Retailer/Items/Show"/>">My Items</a></p>
-                                            </div>
-                                     
-                                    </div>
+                                 <jsp:include page="sidebar.jsp"/>
                                 </div>
                             </div>
                         </div>

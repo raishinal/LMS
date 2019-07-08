@@ -53,5 +53,10 @@ public class CartServiceImpl implements CartService{
     public List<Cart> findCartByDate(String date) {
         return cartDao.selectByDate(date);
     }
+
+    @Override
+    public List<Cart> findCartByRetailer(int id) {
+       return cartDao.selectByRetailer(id);
+    }
     
 }

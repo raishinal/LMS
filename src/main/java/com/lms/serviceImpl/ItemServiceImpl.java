@@ -108,5 +108,15 @@ public class ItemServiceImpl implements ItemService{
     public List<Items> findByRetailer(int id) {
        return itemDao.findByRetailer(id);
     }
+
+    @Override
+    public List<Items> filterByPrice(int sub, double id) {
+       return itemDao.findByPrice(sub, id);
+    }
+
+    @Override
+    public List<Items> findPopularItems() {
+        return itemDao.findPopularItem();
+    }
     
 }

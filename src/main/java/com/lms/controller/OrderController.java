@@ -80,6 +80,7 @@ public class OrderController {
         item.setDescription(it.getDescription());
         item.setPrice(it.getPrice());
         item.setImageName(it.getImageName());
+        item.setLikecounts(it.getLikecounts());
         item.setPosted_date(it.getPosted_date());
         if (!itemService.updateItem(item)) {
             return "redirect:/User/Order/Show?Failure in updating item";
@@ -93,6 +94,7 @@ public class OrderController {
         cart.setPrice(it.getPrice());
         cart.setProductname(it.getName());
         cart.setProductimage(it.getImageName());
+        cart.setRetailer(it.getRetailer());
         cart.setOrderdate(formattedDateTime);
         if (cartService.addCart(cart)) {
 

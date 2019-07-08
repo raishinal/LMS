@@ -6,16 +6,19 @@
 package com.lms.controller;
 
 import com.lms.models.Items;
+import com.lms.models.LikeCounts;
 import com.lms.models.SessionCount;
 import com.lms.models.UserDetails;
 import com.lms.service.CategoryService;
 import com.lms.service.ItemService;
+import com.lms.service.LikeService;
 import com.lms.service.SessionCountService;
 import com.lms.service.UserService;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,9 +60,15 @@ public class HomeController {
     private UserService userService;
     @Autowired
     private SessionCountService sessionCountService;
-       @Autowired
+    @Autowired
     private SessionCount sessionCount;
+    @Autowired
+    private LikeService likeService;
+     @Autowired
+    private Items item;
 
+    @Autowired
+    LikeCounts likeCounts;
 
     @GetMapping("/Index")
     public ModelAndView showIndex(ModelAndView mv, Principal p) {
@@ -72,22 +81,26 @@ public class HomeController {
 
                 if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_USER")) {
                     type = 1;
+
                 } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_RETAILER")) {
                     type = 2;
+                } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_ADMIN")) {
+                    type = 3;
                 }
                 mv.addObject("user_type", type);
             }
+
         } catch (Exception e) {
             System.out.println(e);
         }
         mv.addObject("status", ustatus);
         int count = sessionCountService.getCount();
-        count=count+1;
+        count = count + 1;
         sessionCount.setCount(count);
         sessionCount.setId(1);
         sessionCount.setField("Index");
         sessionCount.setDate(sessionCountService.getDate());
-        
+
         if (sessionCountService.updateCount(sessionCount)) {
             mv.addObject("count", "countfailure");
         } else {
@@ -96,6 +109,7 @@ public class HomeController {
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("sublist", categoryService.findSubCategory());
         mv.addObject("items", itemService.findLatestItems());
+        mv.addObject("popularitems",itemService.findPopularItems());
 
         mv.setViewName("index");
 
@@ -115,6 +129,8 @@ public class HomeController {
                     type = 1;
                 } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_RETAILER")) {
                     type = 2;
+                } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_ADMIN")) {
+                    type = 3;
                 }
                 mv.addObject("user_type", type);
             }
@@ -142,6 +158,8 @@ public class HomeController {
                     type = 1;
                 } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_RETAILER")) {
                     type = 2;
+                } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_ADMIN")) {
+                    type = 3;
                 }
                 mv.addObject("user_type", type);
             }
@@ -171,6 +189,8 @@ public class HomeController {
                     type = 1;
                 } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_RETAILER")) {
                     type = 2;
+                } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_ADMIN")) {
+                    type = 3;
                 }
                 mv.addObject("user_type", type);
             }
@@ -198,6 +218,8 @@ public class HomeController {
                     type = 1;
                 } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_RETAILER")) {
                     type = 2;
+                } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_ADMIN")) {
+                    type = 3;
                 }
                 mv.addObject("user_type", type);
             }
@@ -224,6 +246,8 @@ public class HomeController {
                     type = 1;
                 } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_RETAILER")) {
                     type = 2;
+                } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_ADMIN")) {
+                    type = 3;
                 }
                 mv.addObject("user_type", type);
             }
@@ -231,7 +255,72 @@ public class HomeController {
             System.out.println(e);
         }
         mv.addObject("status", ustatus);
-        List<Items> items= itemService.findItemBySub(sub);
+        List<Items> items = itemService.findItemBySub(sub);
+
+        mv.addObject("categorylist", categoryService.findMainCategory());
+        mv.addObject("sublist", categoryService.findSubCategory());
+        mv.addObject("subitem", items);
+        mv.addObject("subid", sub);
+        mv.setViewName("categories");
+        return mv;
+    }
+
+    @RequestMapping(value = "/Category/Item/Filter/{sub}", method = RequestMethod.GET)
+    public ModelAndView filterProduct(@RequestParam("price") double price,
+            @PathVariable int sub, ModelAndView mv, Principal p) {
+        int ustatus = 0;
+        int type = 0;
+        try {
+            if (p.getName() != null) {
+                ustatus = 1;
+                mv.addObject("username", p.getName());
+
+                if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_USER")) {
+                    type = 1;
+                } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_RETAILER")) {
+                    type = 2;
+                } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_ADMIN")) {
+                    type = 3;
+                }
+                mv.addObject("user_type", type);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        mv.addObject("status", ustatus);
+        List<Items> items = itemService.filterByPrice(sub, price);
+
+        mv.addObject("categorylist", categoryService.findMainCategory());
+        mv.addObject("sublist", categoryService.findSubCategory());
+        mv.addObject("subitem", items);
+        mv.setViewName("categories");
+        return mv;
+    }
+
+    @RequestMapping(value = "/Category/Item/FilterPrice/{sub}", method = RequestMethod.GET)
+    public ModelAndView customfilterProduct(@RequestParam("customprice") double customprice,
+            @PathVariable int sub, ModelAndView mv, Principal p) {
+        int ustatus = 0;
+        int type = 0;
+        try {
+            if (p.getName() != null) {
+                ustatus = 1;
+                mv.addObject("username", p.getName());
+
+                if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_USER")) {
+                    type = 1;
+                } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_RETAILER")) {
+                    type = 2;
+                } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_ADMIN")) {
+                    type = 3;
+                }
+                mv.addObject("user_type", type);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        mv.addObject("status", ustatus);
+        List<Items> items = itemService.filterByPrice(sub, customprice);
 
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("sublist", categoryService.findSubCategory());
@@ -253,8 +342,13 @@ public class HomeController {
                     type = 1;
                 } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_RETAILER")) {
                     type = 2;
+                } else if (userService.findUserByUsername(p.getName()).getUserRole().getAuthority().equals("ROLE_ADMIN")) {
+                    type = 3;
                 }
                 mv.addObject("user_type", type);
+                if(likeService.checkUserItem(id, userService.findUserByUsername(p.getName()).getId())){
+                    mv.addObject("likecheck",0);
+                }
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -267,12 +361,45 @@ public class HomeController {
         mv.setViewName("item");
         return mv;
     }
-    
-    @RequestMapping(value="/Item/like")
-    
-    public @ResponseBody String getlike(){
-        String ajaxCheck= "hello";
-        return ajaxCheck;
+
+    @RequestMapping("/Item/get_time")
+    @ResponseBody
+    String getTime() {
+        Date d = new Date();
+        return d.toString();
+    }
+
+     @RequestMapping(value="/User/Item/Like/{id}", method=RequestMethod.GET)
+//    @ResponseBody
+    public String addLike(@PathVariable int id,Principal p) {
+        Items i=itemService.findItemById(id);
+        item.setId(id);
+        item.setName(i.getName());
+        item.setStock(i.getStock());
+        item.setCategory(i.getCategory());
+        item.setTags(i.getTags());
+        item.setDescription(i.getDescription());
+        item.setPrice(i.getPrice());
+        item.setRetailer(0);
+        item.setImageName(i.getImageName());
+        int counts = i.getLikecounts();
+        counts=counts+1;
+        item.setLikecounts(counts);
+        item.setPosted_date(i.getPosted_date());
+        if(itemService.updateItem(item)){
+            likeCounts.setDate(formattedDateTime);
+        likeCounts.setItemid(id);
+        likeCounts.setUserid(userService.findUserByUsername(p.getName()).getId());
+        if(likeService.addItem(likeCounts)){
+            return "redirect:/Item/"+id+"?success";
+        }
+        else{
+            return "redirect:/Item/"+id+"?failed";
+        }
+        }
+        else{
+            return "redirect:/Item/"+id+"?failed_item_update";
+        }
     }
 
     @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
@@ -297,7 +424,7 @@ public class HomeController {
 
     @GetMapping("/Register")
     public ModelAndView registerUser(ModelAndView mv) {
-
+        mv.addObject("sublist", categoryService.findSubCategory());
         mv.setViewName("registration");
 
         return mv;
